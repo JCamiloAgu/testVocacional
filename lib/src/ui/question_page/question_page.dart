@@ -1,77 +1,91 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:testvocacional/src/models/question.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:testvocacional/src/models/question/question.dart';
+import 'package:testvocacional/src/services/aptitudes_services.dart';
+import 'package:testvocacional/src/services/intereses_service.dart';
+import 'package:testvocacional/src/services/question_services.dart';
 import 'package:testvocacional/src/ui/question_page/answer_options_radio_buttons.dart';
 import 'package:testvocacional/src/ui/results/results_page.dart';
 import 'package:testvocacional/src/ui/widgets/buttons.dart';
 
-class QuestionPage extends StatelessWidget {
+class QuestionPage extends StatefulWidget {
   static const ROUTE_NAME = 'questions';
 
-  final List<Question> questions = [
-    Question(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tincidunt mi sit amet turpis dapibus pulvinar. Donec placerat mauris nisi, vel mattis nisi accumsan in. Sed at urna ultrices',
-        ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4']),
-    Question(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tincidunt mi sit amet turpis dapibus pulvinar. Donec placerat mauris nisi, vel mattis nisi accumsan in. Sed at urna ultrices',
-        ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4']),
-    Question(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tincidunt mi sit amet turpis dapibus pulvinar. Donec placerat mauris nisi, vel mattis nisi accumsan in. Sed at urna ultrices',
-        ['Opción 1', 'Opción 2', 'Opción 3']),
-    Question(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tincidunt mi sit amet turpis dapibus pulvinar. Donec placerat mauris nisi, vel mattis nisi accumsan in. Sed at urna ultrices',
-        [
-          'Opción 1',
-          'Opción 2',
-          'Opción 3',
-          'Opción 4',
-          'Opción 5',
-        ]),
-  ];
+  @override
+  _QuestionPageState createState() => _QuestionPageState();
+}
+
+class _QuestionPageState extends State<QuestionPage> {
+  QuestionService _questionService;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    _loadQuestions();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    _questionService = Provider.of<QuestionService>(context);
+
     return Scaffold(
         appBar: AppBar(title: Text('Preguntas')),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView.separated(
-                  itemCount: questions.length,
-                  physics: AlwaysScrollableScrollPhysics(),
-                  itemBuilder: (context, position) => _questionModel(position),
-                  separatorBuilder: (BuildContext context, int index) => Divider(
-                        thickness: 1.0,
-                      )),
-            ),
-            _bottomButtons(context),
-          ],
-        ));
+        body: _questionService.loading
+            ? Center(child: CircularProgressIndicator())
+            : Column(
+                children: [
+                  LinearPercentIndicator(
+                    percent: _questionService.page / _questionService.lastPage,
+                    progressColor: Colors.red,
+                    padding: EdgeInsets.symmetric(vertical: 2),
+                  ),
+                  Expanded(
+                    child: ListView.separated(
+                        itemCount: _questionService.questions.length,
+                        controller: _scrollController,
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemBuilder: (context, position) => _questionModel(
+                            _questionService.questions[position], position),
+                        separatorBuilder: (BuildContext context, int index) =>
+                            Divider(
+                              thickness: 1.0,
+                            )),
+                  ),
+                  _bottomButtons(),
+                ],
+              ));
   }
 
-  Widget _questionModel(int position) {
+  Widget _questionModel(Question question, int position) {
     return Column(
       children: [
-        _question(questions[position].question, position),
-        AnswerOptionsRadioButtons(questions[position].answerOptions)
+        _question(question, position),
+        AnswerOptionsRadioButtons(question.answerOptions)
       ],
     );
   }
 
-  Widget _question(String question, int position) {
+  Widget _question(Question question, int position) {
+    final questionNumber = _questionService.page * 10 + position + 1;
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text((position + 1).toString() + ') ' + question,
-          style: TextStyle(fontSize: 16)),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(questionNumber.toString() + ') ' + question.question,
+            style: TextStyle(fontSize: 16)),
+      ),
     );
   }
 
-  Widget _nextButton(BuildContext context) {
+  Widget _nextButton() {
     return Container(
         alignment: AlignmentDirectional.bottomEnd,
         child: SubmitButton(
-          onPressed: () => _submit(context),
+          onPressed: () =>
+              _questionService.isLastPage() ? _submit() : _addPage(),
           width: MediaQuery.of(context).size.width * 0.35,
           label: 'Siguiente',
           withIcon: false,
@@ -79,7 +93,7 @@ class QuestionPage extends StatelessWidget {
         ));
   }
 
-  void _submit(BuildContext context) {
+  void _submit() {
     Navigator.pushNamed(context, ResultsPage.ROUTE_NAME);
   }
 
@@ -87,7 +101,9 @@ class QuestionPage extends StatelessWidget {
     return Container(
         alignment: AlignmentDirectional.bottomStart,
         child: SubmitButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => _questionService.page == 0
+              ? Navigator.pop(context)
+              : _decreasePage(),
           width: MediaQuery.of(context).size.width * 0.35,
           label: 'Atrás',
           withIcon: false,
@@ -95,15 +111,53 @@ class QuestionPage extends StatelessWidget {
         ));
   }
 
-  Widget _bottomButtons(BuildContext context) {
+  Widget _bottomButtons() {
     return Row(
       children: [
         _backButton(context),
         Expanded(
           child: Container(),
         ),
-        _nextButton(context),
+        _nextButton(),
       ],
     );
+  }
+
+  void _loadQuestions() async {
+    final questionService =
+        Provider.of<QuestionService>(context, listen: false);
+    final aptitudesService =
+        Provider.of<AptitudesServices>(context, listen: false);
+    final interesesService =
+        Provider.of<InteresesService>(context, listen: false);
+
+    final aptitudes = await aptitudesService.loadAptitudes();
+    final intereses = await interesesService.loadIntereses();
+
+    questionService.mixQuestions(aptitudes, intereses);
+  }
+
+  void _addPage() {
+    _questionService.addPage();
+    _scrollController.animateTo(
+      0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 100),
+    );
+  }
+
+  void _decreasePage() {
+    _questionService.decreasePage();
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 100),
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }

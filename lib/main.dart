@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:testvocacional/src/routes/routes.dart' as routes;
 import 'package:testvocacional/src/services/aptitudes_services.dart';
 import 'package:testvocacional/src/services/intereses_service.dart';
+import 'package:testvocacional/src/services/question_services.dart';
 import 'package:testvocacional/src/ui/home/home_page.dart';
 
 void main() => runApp(MyApp());
@@ -12,8 +13,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AptitudesServices(),),
-        ChangeNotifierProvider(create: (_) => InteresesService(),)
+        ChangeNotifierProvider(
+          create: (_) => QuestionService(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AptitudesServices(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => InteresesService(),
+        )
       ],
       child: MaterialApp(
           title: 'PRUEBA DE ORIENTACIÓN VOCACIONAL',

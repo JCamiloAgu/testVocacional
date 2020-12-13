@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:testvocacional/src/services/aptitudes_services.dart';
-import 'package:testvocacional/src/services/intereses_service.dart';
 import 'package:testvocacional/src/ui/home/home_form/home_form_validations.dart';
-import 'package:testvocacional/src/utils/utils.dart' as utils;
 
 import 'home_form/home_form.dart';
 import 'home_header.dart';
@@ -23,10 +19,6 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Prueba de orientación vocacional'),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () async {
-        await Provider.of<InteresesService>(context, listen: false).loadIntereses();
-        // await Provider.of<AptitudesServices>(context, listen: false).loadAptitudes();
-      },child: Icon(Icons.add),),
       body: buildBody(),
     );
   }
