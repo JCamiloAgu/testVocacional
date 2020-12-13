@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testvocacional/src/ui/home/home_form/gender_radio_buttons.dart';
-import 'package:testvocacional/src/ui/institutions/institution_page.dart';
+import 'package:testvocacional/src/ui/question_page/question_page.dart';
 import 'package:testvocacional/src/ui/widgets/buttons.dart';
 import 'package:testvocacional/src/ui/widgets/inputs.dart';
 
@@ -21,6 +21,7 @@ class HomeForm extends StatelessWidget {
         key: _formKey,
         child: Column(
           children: <Widget>[
+            _title(),
             _inputIdentificationNumber(),
             _inputFullName(),
             _inputEmail(),
@@ -77,14 +78,22 @@ class HomeForm extends StatelessWidget {
   Widget _submitButton(BuildContext context) {
     return Container(
         alignment: AlignmentDirectional.bottomEnd,
-        child: SubmitButton(onPressed: () => _submit(context),
-        width: MediaQuery.of(context).size.width * 0.35,
+        child: SubmitButton(
+          onPressed: () => _submit(context),
+          width: MediaQuery.of(context).size.width * 0.35,
           label: 'Siguiente',
           withIcon: false,
         ));
   }
 
-  void _submit(BuildContext context){
-    Navigator.pushNamed(context, InstitutionPage.ROUTE_NAME);
+  void _submit(BuildContext context) {
+    Navigator.pushNamed(context, QuestionPage.ROUTE_NAME);
+  }
+
+  Widget _title() {
+    return Text(
+      'Información personal',
+      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    );
   }
 }

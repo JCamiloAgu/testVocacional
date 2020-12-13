@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:testvocacional/src/ui/home/home_form/home_form_validations.dart';
+import 'package:testvocacional/src/utils/utils.dart' as utils;
 
 import 'home_form/home_form.dart';
 import 'home_header.dart';
@@ -10,10 +11,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Future.delayed(
-    //     Duration.zero,
-    //     () => utils.showAlertDialog(context,
-    //         title: getDialogTitle(), message: getDialogMessage()));
+    Future.delayed(
+        Duration.zero,
+        () => utils.showAlertDialog(context,
+            title: getDialogTitle(), message: getDialogMessage()));
 
     return Scaffold(
       appBar: AppBar(
@@ -23,11 +24,13 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  String getDialogTitle() => 'PRUEBA DE ORIENTACIÓN VOCACIONAL SENA';
+  String getDialogTitle() =>
+      'CONSENTIMIENTO INFORMADO – PRUEBA DE ORIENTACIÓN VOCACIONAL SENA';
 
   String getDialogMessage() {
-    return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris viverra porta quam vel fringilla. Fusce sed facilisis justo, et pretium arcu. Nam et ante in nibh hendrerit aliquam. Suspendisse potenti. Sed elementum et arcu a pretium. Nunc tincidunt erat ut consectetur porttitor. Mauris gravida, risus sit amet rutrum vehicula, mauris diam facilisis nisl, eu fermentum nulla metus at orci. Integer et mattis purus. Donec tempor tristique enim nec tempus. Mauris aliquet rhoncus mollis. Etiam eu ornare quam. Suspendisse ultricies arcu et diam euismod fermentum. Donec justo massa, vehicula ac augue nec, dignissim ullamcorper magna. Donec dictum, ligula a finibus gravida, risus dolor feugiat ante, eu cursus quam ex vel neque. Donec varius fermentum sapien, a finibus ipsum pulvinar et. Proin venenatis condimentum facilisis.' +
-        'Vestibulum aliquam enim non quam accumsan, vel semper tellus ornare. Suspendisse potenti. Integer porttitor viverra commodo. Sed accumsan tellus a ullamcorper viverra. Fusce pulvinar odio quis erat porttitor, quis suscipit magna porttitor. Maecenas sit amet magna vel quam rhoncus tempus. Integer sodales vitae nulla a pharetra. Pellentesque id neque malesuada, vestibulum eros ut, aliquam lorem. Suspendisse nec turpis non ex cursus malesuada. Vivamus imperdiet turpis justo, a imperdiet nunc varius eget. Sed vehicula pulvinar dolor, ut mattis eros luctus non.';
+    return 'De acuerdo a la información brindada por el SENA doy mi consentimiento para la aplicación de la prueba, la cual hace parte de un ejercicio de pilotaje que llevará a la validación de  un instrumento de orientación vocacional que servirá como guía a los potenciales aprendices del SENA. \n \n' +
+        'Para efectos de su atención, los profesionales en psicología manejarán la información y todos los datos obtenidos como resultado de la aplicación de esta prueba, de acuerdo a los principios éticos y legales que rigen el ejercicio de la psicología en Colombia. Teniendo en cuenta lo anterior comprendo y acepto que la información recolectada es de carácter estrictamente confidencial y que como participante en este proceso de validación tengo derecho a solicitar los resultados obtenidos. \n \n' +
+        'Partiendo de lo anterior y en pleno uso de mis facultades mentales, expreso mi deseo de realizar la prueba de orientación vocacional.';
   }
 
   Widget buildBody() {

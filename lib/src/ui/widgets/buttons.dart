@@ -19,9 +19,9 @@ class SubmitButton extends StatelessWidget {
       child: OutlineButton(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: theme.accentColor,
-        highlightedBorderColor: theme.accentColor,
-        textColor: Theme.of(context).accentColor,
+        color: theme.primaryColor,
+        highlightedBorderColor: theme.primaryColor,
+        textColor: Theme.of(context).primaryColor,
         child: Text(label ?? 'Guardar'),
         onPressed: onPressed,
       ),
@@ -39,7 +39,7 @@ class AlertDialogButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       child: Text(buttonText),
-      textColor: Theme.of(context).accentColor,
+      textColor: Theme.of(context).primaryColor,
       onPressed: onPressed,
     );
   }

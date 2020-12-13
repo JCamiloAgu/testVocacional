@@ -45,6 +45,7 @@ class _CustomInputState extends State<CustomInput> {
       margin: EdgeInsets.only(top: 20),
       child: TextFormField(
         initialValue: widget.initialValue,
+        cursorColor: Colors.black,
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
             labelText: widget.label,

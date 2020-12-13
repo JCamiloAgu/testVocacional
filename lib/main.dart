@@ -24,13 +24,20 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-          title: 'PRUEBA DE ORIENTACIÓN VOCACIONAL',
-          debugShowCheckedModeBanner: false,
-          initialRoute: HomePage.ROUTE_NAME,
-          routes: routes.getApplicationRoutes(),
-          onUnknownRoute: (settings) => MaterialPageRoute(
-                builder: (context) => HomePage(),
-              )),
+        title: 'PRUEBA DE ORIENTACIÓN VOCACIONAL',
+        debugShowCheckedModeBanner: false,
+        initialRoute: HomePage.ROUTE_NAME,
+        routes: routes.getApplicationRoutes(),
+        onUnknownRoute: (settings) => MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+        theme: getThemeData(),
+      ),
     );
   }
+
+  ThemeData getThemeData() => ThemeData.light().copyWith(
+      accentColor: Color(0xff565656),
+      primaryColor: Color(0xffff6b00),
+      inputDecorationTheme: InputDecorationTheme(border: OutlineInputBorder()));
 }

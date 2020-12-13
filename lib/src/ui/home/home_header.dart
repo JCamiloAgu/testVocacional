@@ -6,21 +6,10 @@ class HomeHeader extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          Container(
-            padding: EdgeInsets.all(8),
-            width: double.infinity,
-            color: Theme.of(context).primaryColorLight,
-            child: Column(
-              children: [
-                Text('Datos personales', style: TextStyle(fontSize: 24)),
-                Text('Sección 1 de 6')
-              ],
-            ),
-          ),
           SizedBox(height: 6),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(getDescription()),
+            child: Text(getDescription(), style: TextStyle(fontSize: 18),),
           )
         ],
       ),
@@ -28,6 +17,6 @@ class HomeHeader extends StatelessWidget {
   }
 
   String getDescription() {
-    return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris viverra porta quam vel fringilla. Fusce sed facilisis justo, et pretium arcu. Nam et ante in nibh hendrerit aliquam. Suspendisse potenti. Sed elementum et arcu a pretium. Nunc tincidunt erat ut consectetur porttitor. Mauris gravida, risus sit amet rutrum vehicula, mauris diam facilisis nisl, eu fermentum nulla metus at orci. Integer et mattis purus. Donec tempor tristique enim nec tempus. Mauris aliquet rhoncus mollis. Etiam eu ornare quam. Suspendisse ultricies arcu et diam euismod fermentum. Donec justo massa, vehicula ac augue nec, dignissim ullamcorper magna. Donec dictum, ligula a finibus gravida, risus dolor feugiat ante, eu cursus quam ex vel neque. Donec varius fermentum sapien, a finibus ipsum pulvinar et. Proin venenatis condimentum facilisis.';
+    return 'A continuación lo invitamos a contestar una serie de preguntas que nos permitirán identificar entre los diferentes programas de formación que ofrece el SENA, aquellos con los cuales usted tiene mayor conexión vocacional. Por favor conteste con la mayor sinceridad posible ya que de esto depende la validez de la información.';
   }
 }

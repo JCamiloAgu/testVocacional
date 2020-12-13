@@ -15,7 +15,6 @@ class InteresesService with ChangeNotifier {
 
     if (statusCode == 200) {
       intereses = interesesListFromJson(response.body);
-      print(intereses);
     }
 
     return intereses;

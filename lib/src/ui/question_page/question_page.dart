@@ -37,11 +37,7 @@ class _QuestionPageState extends State<QuestionPage> {
             ? Center(child: CircularProgressIndicator())
             : Column(
                 children: [
-                  LinearPercentIndicator(
-                    percent: _questionService.page / _questionService.lastPage,
-                    progressColor: Colors.red,
-                    padding: EdgeInsets.symmetric(vertical: 2),
-                  ),
+                  progressIndicador(),
                   Expanded(
                     child: ListView.separated(
                         itemCount: _questionService.questions.length,
@@ -62,20 +58,20 @@ class _QuestionPageState extends State<QuestionPage> {
   Widget _questionModel(Question question, int position) {
     return Column(
       children: [
-        _question(question, position),
+        _questionText(question, position),
         AnswerOptionsRadioButtons(question.answerOptions)
       ],
     );
   }
 
-  Widget _question(Question question, int position) {
+  Widget _questionText(Question question, int position) {
     final questionNumber = _questionService.page * 10 + position + 1;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(questionNumber.toString() + ') ' + question.question,
-            style: TextStyle(fontSize: 16)),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
       ),
     );
   }
@@ -159,5 +155,13 @@ class _QuestionPageState extends State<QuestionPage> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  Widget progressIndicador() {
+    return LinearPercentIndicator(
+      percent: _questionService.page / _questionService.lastPage,
+      progressColor: Colors.black,
+      padding: EdgeInsets.symmetric(vertical: 2),
+    );
   }
 }

@@ -25,11 +25,14 @@ class _AnswerOptionsRadioButtonsState extends State<AnswerOptionsRadioButtons> {
 
   Widget buildRadioButtonWithLabelText(String answerOption) {
     final textStyle = TextStyle(fontSize: 16);
+    final theme = Theme.of(context);
 
     return Row(
       children: [
         Radio(
           value: answerOption,
+          activeColor: theme.primaryColor,
+          autofocus: false,
           groupValue: radioGroupQuestionsGroupValue,
           onChanged: (value) => _onChangeRadioGroup(value),
         ),

@@ -21,6 +21,7 @@ class _GenderRadioButtonsState extends State<GenderRadioButtons> {
   @override
   Widget build(BuildContext context) {
     final textStyle = TextStyle(fontSize: 16);
+    final theme = Theme.of(context);
 
     return Container(
         margin: EdgeInsets.only(top: 16),
@@ -36,6 +37,7 @@ class _GenderRadioButtonsState extends State<GenderRadioButtons> {
               Radio(
                 value: _radioValueMale,
                 groupValue: radioGroupGenderGroupValue,
+                activeColor: theme.primaryColor,
                 onChanged: _onChangeRadioGroup,
               ),
               Text(
@@ -45,6 +47,7 @@ class _GenderRadioButtonsState extends State<GenderRadioButtons> {
               Radio(
                 value: _radioValueFemale,
                 groupValue: radioGroupGenderGroupValue,
+                activeColor: theme.primaryColor,
                 onChanged: _onChangeRadioGroup,
               ),
               Text(

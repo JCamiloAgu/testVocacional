@@ -42,7 +42,7 @@ class ChartsBuilder {
         data: (!isNullOrEmpty(data))
             ? data
             : [GraphicsItemModel(domain: '', measure: 0)],
-        fillColorFn: (datum, index) => charts.Color.fromHex(code: '#ff7043'),
+        fillColorFn: (datum, index) => charts.Color.fromHex(code: '#ff6b00'),
       )
     ];
   }
