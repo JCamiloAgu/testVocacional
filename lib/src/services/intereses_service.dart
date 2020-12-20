@@ -4,19 +4,24 @@ import 'package:testvocacional/src/globals/environment.dart';
 import 'package:testvocacional/src/models/intereses.dart';
 
 class InteresesService with ChangeNotifier {
+  List<Intereses> _intereses;
 
   Future<List<Intereses>> loadIntereses() async {
-    List<Intereses> intereses;
-
+    if (_intereses != null) {
+      return _intereses;
+    }
     final response =
         await http.get(Environment.apiUrl + 'intereses?pageSize=40');
 
     final statusCode = response.statusCode;
 
     if (statusCode == 200) {
-      intereses = interesesListFromJson(response.body);
+      _intereses = interesesListFromJson(response.body);
     }
 
-    return intereses;
+    return _intereses;
   }
+
+  Intereses getInteresById(String id) =>
+      _intereses.firstWhere((interes) => interes.id == id, orElse: () => null);
 }

@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:testvocacional/src/models/graphics_item_model.dart';
+import 'package:testvocacional/src/services/question/question_services.dart';
 import 'package:testvocacional/src/ui/widgets/buttons.dart';
 
 import 'charts_builder.dart';
@@ -23,17 +25,25 @@ class _ResultsPageState extends State<ResultsPage> {
   final _filePath =
       '/storage/emulated/0/Android/media/com.sena.testvocacional/';
   final _fileName = 'resultadoTestVocacional.png';
+  QuestionService questionService;
 
-  final List<GraphicsItemModel> data = [
-    GraphicsItemModel(domain: 'CDITI 1', measure: 87),
-    GraphicsItemModel(domain: 'CDITI 2', measure: 14),
-    GraphicsItemModel(domain: 'CDITI 3', measure: 29),
-    GraphicsItemModel(domain: 'CDITI 4', measure: 97),
-    GraphicsItemModel(domain: 'CDITI 5', measure: 43),
-  ];
+  final List<GraphicsItemModel> data = [];
+
+  @override
+  void initState() {
+    questionService = Provider.of<QuestionService>(context, listen: false);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // .sort((a, b) => getPrice(a).compareTo(getPrice(b)));
+    questionService.result.forEach((key, value) {
+      data.add(GraphicsItemModel(domain: key, measure: value));
+    });
+
+    data.sort((a, b) => b.measure.compareTo(a.measure));
+
     final chartsBuilder = ChartsBuilder();
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +53,8 @@ class _ResultsPageState extends State<ResultsPage> {
         children: [
           RepaintBoundary(
               key: scr,
-              child: chartsBuilder.build('Resultados finales', [...data])),
+              child: chartsBuilder.build(
+                  'Resultados finales', [...data.sublist(0, 6)])),
           SubmitButton(onPressed: () => takeScreenshot())
         ],
       ),
@@ -61,10 +72,9 @@ class _ResultsPageState extends State<ResultsPage> {
       await imgFile.writeAsBytesSync(pngBytes);
 
       await openImage();
-
     } on FileSystemException catch (e) {
       if (e.message == 'Cannot open file') {
-        if(await createFolder()){
+        if (await createFolder()) {
           await takeScreenshot();
         }
       }
@@ -73,6 +83,7 @@ class _ResultsPageState extends State<ResultsPage> {
     }
   }
 
+  // ignore: missing_return
   Future<File> get localfile async {
     try {
       final _permissionHandler = Permission.storage;

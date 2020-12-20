@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:testvocacional/src/ui/widgets/buttons.dart';
 
 Future<void> showAlertDialog(BuildContext context, {String message, String title}) async {
-  showDialog(
+  await showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {

@@ -83,7 +83,7 @@ class EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomInput(
-      label: label != null ? label : 'Correo electrónico',
+      label: label ?? 'Correo electrónico',
       onSaved: onSaved,
       errorText: validations.emailErrorText,
       onChanged: (value) => validations.onChangeEmail(value),

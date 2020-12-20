@@ -28,8 +28,8 @@ class HomePage extends StatelessWidget {
       'CONSENTIMIENTO INFORMADO – PRUEBA DE ORIENTACIÓN VOCACIONAL SENA';
 
   String getDialogMessage() {
-    return 'De acuerdo a la información brindada por el SENA doy mi consentimiento para la aplicación de la prueba, la cual hace parte de un ejercicio de pilotaje que llevará a la validación de  un instrumento de orientación vocacional que servirá como guía a los potenciales aprendices del SENA. \n \n' +
-        'Para efectos de su atención, los profesionales en psicología manejarán la información y todos los datos obtenidos como resultado de la aplicación de esta prueba, de acuerdo a los principios éticos y legales que rigen el ejercicio de la psicología en Colombia. Teniendo en cuenta lo anterior comprendo y acepto que la información recolectada es de carácter estrictamente confidencial y que como participante en este proceso de validación tengo derecho a solicitar los resultados obtenidos. \n \n' +
+    return 'De acuerdo a la información brindada por el SENA doy mi consentimiento para la aplicación de la prueba, la cual hace parte de un ejercicio de pilotaje que llevará a la validación de  un instrumento de orientación vocacional que servirá como guía a los potenciales aprendices del SENA. \n \n'
+        'Para efectos de su atención, los profesionales en psicología manejarán la información y todos los datos obtenidos como resultado de la aplicación de esta prueba, de acuerdo a los principios éticos y legales que rigen el ejercicio de la psicología en Colombia. Teniendo en cuenta lo anterior comprendo y acepto que la información recolectada es de carácter estrictamente confidencial y que como participante en este proceso de validación tengo derecho a solicitar los resultados obtenidos. \n \n'
         'Partiendo de lo anterior y en pleno uso de mis facultades mentales, expreso mi deseo de realizar la prueba de orientación vocacional.';
   }
 

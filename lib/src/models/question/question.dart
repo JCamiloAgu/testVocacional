@@ -4,6 +4,7 @@ class Question {
   final String _id;
   final String _question;
   final AnswerOptionStrategy _answerOption;
+  int value;
 
   Question(this._id, this._question, this._answerOption);
 
@@ -12,4 +13,6 @@ class Question {
   String get question => _question;
 
   List<String> get answerOptions => _answerOption.answerOptions;
+
+  AnswerOptionStrategy get answerOption => _answerOption;
 }

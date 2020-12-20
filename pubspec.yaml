@@ -17,6 +17,7 @@ dependencies:
   charts_flutter: ^0.9.0
   http: ^0.12.2
   percent_indicator: ^2.1.8
+  edge_alert: ^0.0.1
 
   permission_handler: ^5.0.1+1
   open_file: ^3.0.1

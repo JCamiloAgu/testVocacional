@@ -1,9 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:testvocacional/src/models/question/question.dart';
+import 'package:testvocacional/src/services/question/question_services.dart';
 
 class AnswerOptionsRadioButtons extends StatefulWidget {
-  final List<String> answerOptions;
+  final Question question;
 
-  const AnswerOptionsRadioButtons(this.answerOptions);
+  const AnswerOptionsRadioButtons(this.question);
 
   @override
   _AnswerOptionsRadioButtonsState createState() =>
@@ -11,13 +15,13 @@ class AnswerOptionsRadioButtons extends StatefulWidget {
 }
 
 class _AnswerOptionsRadioButtonsState extends State<AnswerOptionsRadioButtons> {
-  String radioGroupQuestionsGroupValue;
+  int radioGroupQuestionsGroupValue;
 
   @override
   Widget build(BuildContext context) {
-    radioGroupQuestionsGroupValue ??= widget.answerOptions[0];
-    return Column(
-      children: widget.answerOptions
+    radioGroupQuestionsGroupValue = widget.question.value;
+    return Row(
+      children: widget.question.answerOptions
           .map((answerOption) => buildRadioButtonWithLabelText(answerOption))
           .toList(),
     );
@@ -27,26 +31,37 @@ class _AnswerOptionsRadioButtonsState extends State<AnswerOptionsRadioButtons> {
     final textStyle = TextStyle(fontSize: 16);
     final theme = Theme.of(context);
 
-    return Row(
-      children: [
-        Radio(
-          value: answerOption,
-          activeColor: theme.primaryColor,
-          autofocus: false,
-          groupValue: radioGroupQuestionsGroupValue,
-          onChanged: (value) => _onChangeRadioGroup(value),
-        ),
-        Flexible(
-          child: Text(
-            answerOption,
+    final questionIndex =
+        widget.question.answerOptions.indexOf(answerOption);
+
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            (questionIndex + 1).toString(),
             style: textStyle,
           ),
-        ),
-      ],
+          Radio(
+            value: questionIndex,
+            activeColor: theme.primaryColor,
+            autofocus: false,
+            groupValue: radioGroupQuestionsGroupValue,
+            onChanged: (value) => _onChangeRadioGroup(value),
+          ),
+        ],
+      ),
     );
   }
 
-  void _onChangeRadioGroup(value) {
-    setState(() => radioGroupQuestionsGroupValue = value);
+  void _onChangeRadioGroup(int value) {
+    final questionService =
+        Provider.of<QuestionService>(context, listen: false);
+    setState(() {
+      final index = questionService.questions.indexOf(widget.question);
+      widget.question.value = value;
+      questionService.editQuestion(index, widget.question);
+      return radioGroupQuestionsGroupValue = value;
+    });
   }
 }

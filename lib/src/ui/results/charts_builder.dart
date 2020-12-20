@@ -5,7 +5,7 @@ import 'package:testvocacional/src/models/graphics_item_model.dart';
 class ChartsBuilder {
   Widget build(String title, List<GraphicsItemModel> data) {
     return Padding(
-      padding: const EdgeInsets.all(4),
+      padding: const EdgeInsets.all(8.0),
       child: Card(
         elevation: 8,
         child: Column(
@@ -16,14 +16,15 @@ class ChartsBuilder {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             )),
             Container(
-              padding: const EdgeInsets.all(8),
               width: double.infinity,
-              height: 200,
+              height: 300,
               child: charts.BarChart(
                 _createSampleData(data),
                 vertical: false,
                 primaryMeasureAxis: _getPrimaryMeasureAxis(),
-                domainAxis: _getDomainAxis(),
+                barRendererDecorator: charts.BarLabelDecorator<String>(),
+                domainAxis:
+                    charts.OrdinalAxisSpec(renderSpec: charts.NoneRenderSpec()),
               ),
             ),
           ],
@@ -36,14 +37,15 @@ class ChartsBuilder {
       List<GraphicsItemModel> data) {
     return [
       charts.Series<GraphicsItemModel, String>(
-        id: 'Graphics',
-        domainFn: (GraphicsItemModel model, _) => model.domain,
-        measureFn: (GraphicsItemModel model, _) => model.measure,
-        data: (!isNullOrEmpty(data))
-            ? data
-            : [GraphicsItemModel(domain: '', measure: 0)],
-        fillColorFn: (datum, index) => charts.Color.fromHex(code: '#ff6b00'),
-      )
+          id: 'Graphics',
+          domainFn: (GraphicsItemModel model, _) => model.domain,
+          measureFn: (GraphicsItemModel model, _) => model.measure,
+          data: (!isNullOrEmpty(data))
+              ? data
+              : [GraphicsItemModel(domain: '', measure: 0)],
+          fillColorFn: (datum, index) => charts.Color.fromHex(code: '#ff6b00'),
+          labelAccessorFn: (GraphicsItemModel data, _) =>
+              '${data.domain}: ${data.measure.toString()}')
     ];
   }
 
@@ -54,14 +56,6 @@ class ChartsBuilder {
                 charts.TextStyleSpec(color: charts.MaterialPalette.black),
             lineStyle: charts.LineStyleSpec(
                 color: charts.MaterialPalette.gray.shade400)));
-  }
-
-  charts.OrdinalAxisSpec _getDomainAxis() {
-    return charts.OrdinalAxisSpec(
-        renderSpec: charts.SmallTickRendererSpec(
-      labelStyle:
-          charts.TextStyleSpec(color: charts.MaterialPalette.gray.shade800),
-    ));
   }
 
   bool isNullOrEmpty(List<GraphicsItemModel> data) =>
