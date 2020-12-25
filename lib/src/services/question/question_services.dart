@@ -8,18 +8,23 @@ import 'package:testvocacional/src/services/question/question_result_calculator.
 
 class QuestionService with ChangeNotifier {
   List<Question> _questions;
-  bool _loading = true;
   int page = 0;
   int lastPage;
 
-  bool get loading => _loading;
-
   Map<String, int> result = {};
+
+  bool _loading = true;
+
+  bool get loading => _loading;
 
   set loading(bool value) {
     _loading = value;
     notifyListeners();
   }
+
+  int _gritValue;
+
+  int get gritValue => _gritValue;
 
   List<Question> get questions {
     final start = page * 10;
@@ -31,7 +36,7 @@ class QuestionService with ChangeNotifier {
   }
 
   void mixQuestions(List<Aptitudes> aptitudes, List<Intereses> intereses) {
-    if(_questions != null) return;
+    if (_questions != null) return;
 
     _questions = <Question>[];
 
@@ -90,5 +95,6 @@ class QuestionService with ChangeNotifier {
 
     questionResultCalculator.calculateAptitudesResult(aptitudes);
     result = questionResultCalculator.calculateInteresesResult(intereses);
+    _gritValue = questionResultCalculator.getGritValue();
   }
 }

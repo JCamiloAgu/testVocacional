@@ -12,6 +12,7 @@ import 'package:testvocacional/src/ui/question_page/answer_helps/aptitudes_answe
 import 'package:testvocacional/src/ui/question_page/answer_options_radio_buttons.dart';
 import 'package:testvocacional/src/ui/results/results_page.dart';
 import 'package:testvocacional/src/ui/widgets/buttons.dart';
+import 'package:testvocacional/src/utils/utils.dart' as utils;
 
 import 'answer_helps/intereses_help.dart';
 
@@ -41,7 +42,15 @@ class _QuestionPageState extends State<QuestionPage> {
     _questionService = Provider.of<QuestionService>(context);
 
     return Scaffold(
-        appBar: AppBar(title: Text('Preguntas')),
+        appBar: AppBar(
+          title: Text('Preguntas'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.help_outline),
+              onPressed: _onPressedHelpIcon,
+            )
+          ],
+        ),
         body: _questionService.loading
             ? Center(child: CircularProgressIndicator())
             : Column(
@@ -85,7 +94,10 @@ class _QuestionPageState extends State<QuestionPage> {
       padding: const EdgeInsets.all(8.0),
       child: Align(
         alignment: Alignment.centerLeft,
-        child: Text(questionNumber.toString() + ') ' + question.question,
+        child: Text(
+            questionNumber.toString() +
+                ') ' +
+                question.question.replaceFirst('*', ''),
             style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
@@ -210,5 +222,24 @@ class _QuestionPageState extends State<QuestionPage> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _onPressedHelpIcon() {
+    utils.showAlertDialogFromContent(context,
+        title: 'Ayuda',
+        content: Column(
+          children: [
+            Text(
+              'Aptitudes',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            ApitudesAnswerInstructions(isFontInBold: false),
+            Text(
+              'Intereses',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            InteresesHelp(isFontInBold: false),
+          ],
+        ));
   }
 }

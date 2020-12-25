@@ -1,6 +1,7 @@
 import 'package:testvocacional/src/globals/campos.dart';
 import 'package:testvocacional/src/globals/relacion_campos.dart';
 import 'package:testvocacional/src/globals/tecnologias.dart';
+import 'package:testvocacional/src/models/aptitudes.dart';
 import 'package:testvocacional/src/models/intereses.dart';
 import 'package:testvocacional/src/models/question/question.dart';
 import 'package:testvocacional/src/services/aptitudes_services.dart';
@@ -20,21 +21,31 @@ class QuestionResultCalculator {
       _aptitudesResult[campo] =
           _getAptitudAnswerValue(aptitudesQuestion, campo);
     });
+
+    print(_aptitudesResult);
   }
 
   int _getAptitudAnswerValue(List<Question> aptitudesQuestion, String campo) {
     var total = 0;
 
-    aptitudesQuestion.forEach((aptitudQuestion) {
+    for (var aptitudQuestion in aptitudesQuestion) {
       var aptitud = aptitudesServices.getAptitudById(aptitudQuestion.id);
 
       if (aptitud.campos == campo) {
+        if (_isNegativeGrit(aptitud, campo)) {
+          total += 5 - aptitudQuestion.value;
+          continue;
+        }
+
         total += aptitudQuestion.value;
       }
-    });
+    }
 
     return total;
   }
+
+  bool _isNegativeGrit(Aptitudes aptitud, String campo) =>
+      campo == Campos.GRIT && aptitud.afirmacion.contains('*');
 
   Map<String, int> calculateInteresesResult(List<Question> interesesQuestions) {
     Tecnologias.ALL_TECNOLOGIAS.forEach((tecnologia) {
@@ -60,7 +71,8 @@ class QuestionResultCalculator {
       }
     });
 
-    tecnologiasValue += _calculateRelacionCampos(interesForCalculateRelacionCampos);
+    tecnologiasValue +=
+        _calculateRelacionCampos(interesForCalculateRelacionCampos);
 
     return tecnologiasValue;
   }
@@ -74,4 +86,6 @@ class QuestionResultCalculator {
 
     return _aptitudesResult[campo1] + _aptitudesResult[campo2];
   }
+
+  int getGritValue() => _aptitudesResult[Campos.GRIT];
 }

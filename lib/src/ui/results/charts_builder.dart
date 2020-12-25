@@ -45,7 +45,7 @@ class ChartsBuilder {
               : [GraphicsItemModel(domain: '', measure: 0)],
           fillColorFn: (datum, index) => charts.Color.fromHex(code: '#ff6b00'),
           labelAccessorFn: (GraphicsItemModel data, _) =>
-              '${data.domain}: ${data.measure.toString()}')
+              '${data.domain}: ${data.measure}%')
     ];
   }
 

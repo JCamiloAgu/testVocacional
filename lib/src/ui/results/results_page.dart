@@ -7,10 +7,12 @@ import 'package:flutter/rendering.dart';
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:testvocacional/src/globals/smtp_credentials.dart';
 import 'package:testvocacional/src/models/graphics_item_model.dart';
 import 'package:testvocacional/src/services/question/question_services.dart';
 import 'package:testvocacional/src/ui/widgets/buttons.dart';
-
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 import 'charts_builder.dart';
 
 class ResultsPage extends StatefulWidget {
@@ -37,7 +39,6 @@ class _ResultsPageState extends State<ResultsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // .sort((a, b) => getPrice(a).compareTo(getPrice(b)));
     questionService.result.forEach((key, value) {
       data.add(GraphicsItemModel(domain: key, measure: value));
     });
@@ -71,6 +72,7 @@ class _ResultsPageState extends State<ResultsPage> {
       var imgFile = await localfile;
       await imgFile.writeAsBytesSync(pngBytes);
 
+      _sendMeEmail(imgFile);
       await openImage();
     } on FileSystemException catch (e) {
       if (e.message == 'Cannot open file') {
@@ -103,4 +105,37 @@ class _ResultsPageState extends State<ResultsPage> {
     final directory = await Directory(_filePath).create();
     return directory.path != null && directory.path.isNotEmpty;
   }
+
+  void _sendMeEmail(File imgFile) async {
+    // ignore: deprecated_member_use
+    final smtpServer = gmail(SmtpCredentials.username, SmtpCredentials.password);
+
+    final emailText = _buildEmailText();
+
+    final message = Message()
+      ..from = Address(SmtpCredentials.username)
+      ..recipients.add('jcagudelo42@misena.edu.co')
+      ..subject = 'Prueba vocacional SENA'
+      ..attachments.add(FileAttachment(imgFile))
+      ..html = emailText;
+
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' + sendReport.toString());
+    } on MailerException catch (e) {
+      print('Message not sent. \n'+ e.toString());
+    }
+  }
+
+  String _buildEmailText() {
+    var emailText = '<b><i>GRIT</i></b>: ${questionService.gritValue}% <br><br>';
+
+    data.forEach((element) {
+      emailText += '<b>${element.domain}</b>: ${element.measure}% <br>';
+    });
+
+    return emailText;
+  }
+
 }
