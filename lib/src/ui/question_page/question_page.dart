@@ -57,16 +57,13 @@ class _QuestionPageState extends State<QuestionPage> {
                 children: [
                   progressIndicador(),
                   Expanded(
-                    child: ListView.separated(
-                        itemCount: _questionService.questions.length,
-                        controller: _scrollController,
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemBuilder: (context, position) => _questionModel(
-                            _questionService.questions[position], position),
-                        separatorBuilder: (BuildContext context, int index) =>
-                            Divider(
-                              thickness: 1.0,
-                            )),
+                    child: ListView.builder(
+                      itemCount: _questionService.questions.length,
+                      controller: _scrollController,
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemBuilder: (context, position) => _questionModel(
+                          _questionService.questions[position], position),
+                    ),
                   ),
                   _bottomButtons(),
                 ],
@@ -76,15 +73,28 @@ class _QuestionPageState extends State<QuestionPage> {
   Widget _questionModel(Question question, int position) {
     final showInteresesHelp = isShowInteresesHelp(position);
 
-    return Column(
-      children: [
-        showInteresesHelp ? InteresesHelp() : Container(),
-        position == 0 && _questionService.page == 0
-            ? ApitudesAnswerInstructions()
-            : Container(),
-        _questionText(question, position),
-        AnswerOptionsRadioButtons(question)
-      ],
+    return Container(
+      margin: EdgeInsets.only(bottom: position == 9 ? 30 : 2),
+      child: Column(
+        children: [
+          showInteresesHelp ? InteresesHelp() : Container(),
+          position == 0 && _questionService.page == 0
+              ? ApitudesAnswerInstructions()
+              : Container(),
+          Card(
+              elevation: 5,
+              margin: EdgeInsets.only(top: position == 0 ? 0 : 15, left: 10, right: 10),
+              child: Container(
+                padding: EdgeInsets.all(5),
+                child: Column(
+                  children: [
+                    _questionText(question, position),
+                    AnswerOptionsRadioButtons(question)
+                  ],
+                ),
+              )),
+        ],
+      ),
     );
   }
 

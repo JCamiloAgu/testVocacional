@@ -19,7 +19,7 @@ class _GenderRadioButtonsState extends State<GenderRadioButtons> {
   final int _radioValueMale = 0;
   final int _radioValueFemale = 1;
 
-  int radioGroupGenderGroupValue = User().gender == 'Hombre' ? 0 : 1;
+  int radioGroupGenderGroupValue = User().gender == 'Mujer' ? 1 : 0;
 
   @override
   Widget build(BuildContext context) {

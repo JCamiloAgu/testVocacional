@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:testvocacional/src/services/home_service.dart';
 import 'package:testvocacional/src/ui/widgets/buttons.dart';
@@ -73,4 +74,20 @@ Future<PermissionStatus> askStoragePermission(BuildContext context) async {
   }
 
   return result;
+}
+
+
+ProgressDialog getProgressDialog(BuildContext context, String message) {
+  final progressDialog = ProgressDialog(context,
+      type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
+
+  progressDialog.style(
+    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    messageTextStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+        color: Theme.of(context).textTheme.bodyText1.color),
+    message: message,
+  );
+
+  return progressDialog;
 }

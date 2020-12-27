@@ -5,6 +5,7 @@ import 'package:testvocacional/src/services/aptitudes_services.dart';
 import 'package:testvocacional/src/services/home_service.dart';
 import 'package:testvocacional/src/services/question/question_services.dart';
 import 'package:testvocacional/src/services/intereses_service.dart';
+import 'package:testvocacional/src/services/results_service.dart';
 import 'package:testvocacional/src/ui/home/home_page.dart';
 
 void main() => runApp(MyApp());
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => QuestionService(),
+        ),
+        ChangeNotifierProvider(
+          create:(ctx) => ResultsService(GlobalKey(), ctx),
         ),
       ],
       child: MaterialApp(
