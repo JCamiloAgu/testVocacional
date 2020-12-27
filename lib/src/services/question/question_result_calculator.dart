@@ -21,8 +21,6 @@ class QuestionResultCalculator {
       _aptitudesResult[campo] =
           _getAptitudAnswerValue(aptitudesQuestion, campo);
     });
-
-    print(_aptitudesResult);
   }
 
   int _getAptitudAnswerValue(List<Question> aptitudesQuestion, String campo) {

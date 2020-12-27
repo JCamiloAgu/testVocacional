@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:testvocacional/src/routes/routes.dart' as routes;
 import 'package:testvocacional/src/services/aptitudes_services.dart';
+import 'package:testvocacional/src/services/home_service.dart';
 import 'package:testvocacional/src/services/question/question_services.dart';
 import 'package:testvocacional/src/services/intereses_service.dart';
 import 'package:testvocacional/src/ui/home/home_page.dart';
@@ -13,6 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => HomeService(),
+        ),
         ChangeNotifierProvider(
           create: (_) => AptitudesServices(),
         ),

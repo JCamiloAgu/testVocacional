@@ -18,6 +18,8 @@ class CustomInput extends StatefulWidget {
   final int maxLines;
   final int minLines;
 
+  final String helper;
+
   CustomInput({
     this.errorText,
     @required this.label,
@@ -29,7 +31,7 @@ class CustomInput extends StatefulWidget {
     this.isEnabled = true,
     this.isReadOnly = true,
     this.maxLines = 1,
-    this.minLines = 1,
+    this.minLines = 1, this.helper,
   });
 
   @override
@@ -49,6 +51,7 @@ class _CustomInputState extends State<CustomInput> {
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
             labelText: widget.label,
+            helperText: widget.helper,
             errorText: (hasError) ? widget.errorText : null),
         keyboardType: widget.keyboardType,
         onChanged: (widget.onChanged == null)
@@ -57,6 +60,7 @@ class _CustomInputState extends State<CustomInput> {
                 setState(() => hasError = !widget.onChanged(value));
               },
         validator: widget.validator,
+        enabled: widget.isEnabled,
         onSaved: widget.onSaved,
         maxLines: widget.maxLines,
         minLines: widget.minLines,
@@ -73,11 +77,15 @@ class EmailInput extends StatelessWidget {
   final String initialValue;
   final String label;
 
+  final bool isEnabled;
+
+  final String helper;
+
   EmailInput(
       {this.label,
       @required this.onSaved,
       @required this.validations,
-      this.initialValue
+      this.initialValue, this.isEnabled = true, this.helper
       });
 
   @override
@@ -88,8 +96,10 @@ class EmailInput extends StatelessWidget {
       errorText: validations.emailErrorText,
       onChanged: (value) => validations.onChangeEmail(value),
       validator: (value) => validations.validatorEmail(value),
+      isEnabled: isEnabled,
       keyboardType: TextInputType.emailAddress,
       initialValue: initialValue,
+      helper: helper,
     );
   }
 }

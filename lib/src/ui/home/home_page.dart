@@ -6,16 +6,27 @@ import 'package:testvocacional/src/utils/utils.dart' as utils;
 import 'home_form/home_form.dart';
 import 'home_header.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const ROUTE_NAME = 'home';
 
   @override
-  Widget build(BuildContext context) {
-    Future.delayed(
-        Duration.zero,
-        () => utils.showAlertDialog(context,
-            title: getDialogTitle(), message: getDialogMessage()));
+  _HomePageState createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    Future.delayed(
+            Duration(milliseconds: 500),
+            () => utils.showAlertDialogConsent(context,
+                title: getDialogTitle(), message: getDialogMessage()))
+        .then((_) => utils.askStoragePermission(context));
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Prueba de orientación vocacional'),

@@ -34,9 +34,6 @@ class _AnswerOptionsRadioButtonsState extends State<AnswerOptionsRadioButtons> {
     final questionIndex =
         widget.question.answerOptions.indexOf(answerOption);
 
-    // Future.delayed(Duration(seconds: 1))
-    // .then((value) => _onChangeRadioGroup(1));
-
     return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
