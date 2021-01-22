@@ -19,6 +19,8 @@ class InteresesService with ChangeNotifier {
       _intereses = interesesListFromJson(response.body);
     }
 
+    _intereses.shuffle();
+
     return _intereses;
   }
 

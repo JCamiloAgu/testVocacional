@@ -31,11 +31,7 @@ class _AnswerOptionsRadioButtonsState extends State<AnswerOptionsRadioButtons> {
     final textStyle = TextStyle(fontSize: 16);
     final theme = Theme.of(context);
 
-    final questionIndex =
-        widget.question.answerOptions.indexOf(answerOption);
-
-    Future.delayed(Duration(seconds: 1))
-        .then((value) => _onChangeRadioGroup(1));
+    final questionIndex = widget.question.answerOptions.indexOf(answerOption);
 
     return Expanded(
       child: Row(

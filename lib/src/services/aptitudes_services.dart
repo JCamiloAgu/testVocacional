@@ -21,6 +21,8 @@ class AptitudesServices with ChangeNotifier {
       _aptitudes = aptitudesListFromJson(response.body);
     }
 
+    _aptitudes.shuffle();
+
     return _aptitudes;
   }
 

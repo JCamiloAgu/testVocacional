@@ -27,7 +27,7 @@ class ResultsService with ChangeNotifier {
 
   ResultsService(this.scr, this.context);
 
-  bool _hasBeenSendEmail;
+  bool _hasBeenSendEmail = true;
 
   bool shouldShowProgressDialog = true;
 
@@ -90,6 +90,7 @@ class ResultsService with ChangeNotifier {
       ..from = Address(SmtpCredentials.username)
       ..recipients.add(user.email)
       ..subject = 'Prueba vocacional SENA'
+      ..ccRecipients.addAll(['yaarce4@misena.edu.co', 'jorregomartinez@misena.edu.co'])
       ..attachments.add(FileAttachment(imgFile))
       ..html = emailText;
 

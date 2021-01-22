@@ -12,19 +12,22 @@ Future<void> showAlertDialogConsent(BuildContext context,
       barrierDismissible: false,
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text(title),
-          content: SingleChildScrollView(child: Text(message)),
-          actions: <Widget>[
-            AlertDialogButton(
-              buttonText: 'No Acepto',
-              onPressed: () => SystemNavigator.pop(animated: true),
-            ),
-            AlertDialogButton(
-              buttonText: 'Acepto',
-              onPressed: () => Navigator.of(context).pop(),
-            )
-          ],
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: AlertDialog(
+            title: Text(title),
+            content: SingleChildScrollView(child: Text(message)),
+            actions: <Widget>[
+              AlertDialogButton(
+                buttonText: 'No Acepto',
+                onPressed: () => SystemNavigator.pop(animated: true),
+              ),
+              AlertDialogButton(
+                buttonText: 'Acepto',
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            ],
+          ),
         );
       });
 }
