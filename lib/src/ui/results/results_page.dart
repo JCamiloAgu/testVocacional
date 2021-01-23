@@ -49,8 +49,23 @@ class ResultsPage extends StatelessWidget {
               key: resultsService.scr,
               child: chartsBuilder.build('Resultados finales',
                   [...resultsService.data.sublist(0, 6)])),
+          _motivationalMessage(),
           _ActionButtons()
         ],
+      ),
+    );
+  }
+
+  Widget _motivationalMessage() {
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      elevation: 8,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Text(
+          'Estos son los resultados que hemos obtenido de acuerdo a tus respuestas. Te animamos a seguir tu proceso de formación en el SENA!!!',
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+        ),
       ),
     );
   }

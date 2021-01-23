@@ -7,7 +7,7 @@ class ChartsBuilder {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
-        elevation: 8,
+        elevation: 3,
         child: Column(
           children: [
             Center(
