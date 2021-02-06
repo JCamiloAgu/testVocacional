@@ -8,7 +8,7 @@ class HomeFormValidations extends Validations {
 
   bool _isValidIdentificationNumber(String value) =>
       (isValidRequiredInput(value) &&
-          value.length >= 10 &&
+          value.length >= 7 &&
           int.tryParse(value) != null);
 
   bool onChangeIdentificationNumber(String value) =>

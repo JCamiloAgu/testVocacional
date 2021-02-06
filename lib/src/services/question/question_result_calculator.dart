@@ -31,7 +31,7 @@ class QuestionResultCalculator {
 
       if (aptitud.campos == campo) {
         if (_isNegativeGrit(aptitud, campo)) {
-          total += 5 - aptitudQuestion.value;
+          total += 5 - aptitudQuestion.value + 1;
           continue;
         }
 

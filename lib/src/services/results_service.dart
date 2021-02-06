@@ -117,7 +117,7 @@ class ResultsService with ChangeNotifier {
         '<li><b>Género:</b> ${user.gender}</li>'
         '</ul>';
 
-    emailText += '<b><i>GRIT</i></b>: ${questionService.gritValue}% <br><br>';
+    emailText += '<b><i>GRIT</i></b>: ${questionService.gritValue}<br><br>';
 
     data.forEach((element) {
       emailText += '<b>${element.domain}</b>: ${element.measure}% <br>';

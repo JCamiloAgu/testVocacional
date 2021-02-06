@@ -130,7 +130,7 @@ class __ActionButtonsState extends State<_ActionButtons> {
                 child: Text(
                     'Tuvimos un problema al enviar el correo electrónico con los '
                     'resultados, por favor asegurate de tener una conexión '
-                    'estable a internet y vuleve a intentarlo.')),
+                    'estable a internet y vuelve a intentarlo.')),
             actions: <Widget>[
               AlertDialogButton(
                 buttonText: 'Ok',
