@@ -8,6 +8,7 @@ import 'package:testvocacional/src/services/question/question_services.dart';
 import 'package:testvocacional/src/services/results_service.dart';
 import 'package:testvocacional/src/ui/widgets/buttons.dart';
 import 'package:testvocacional/src/utils/utils.dart' as utils;
+import 'package:testvocacional/src/utils/utils.dart';
 
 import 'charts_builder.dart';
 
@@ -96,7 +97,15 @@ class __ActionButtonsState extends State<_ActionButtons> {
       children: [
         SubmitButton(
             padding: EdgeInsets.symmetric(horizontal: 15),
-            onPressed: () async => await _resultsService.openImage()),
+            onPressed: () async {
+              try{
+              await _resultsService.openImage();
+
+              }on Exception catch (e){
+                await showAlertDialogConsent(context,
+                    message: e.toString(), title: 'Error');
+              }
+            }),
         _hasBeenOccurredAErrorSendEmail
             ? SubmitButton(
                 padding: EdgeInsets.symmetric(horizontal: 15),

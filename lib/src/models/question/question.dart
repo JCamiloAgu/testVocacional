@@ -6,7 +6,7 @@ class Question {
   final AnswerOptionStrategy _answerOption;
   int value;
 
-  Question(this._id, this._question, this._answerOption);
+  Question(this._id, this._question, this._answerOption): value = 2;
 
   String get id => _id;
 

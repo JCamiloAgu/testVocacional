@@ -2,15 +2,9 @@
 
 Aplicacion para el Sena, la cual busca darle a las personas una idea sobre cual carrera empezar a estudiar.
 
-## Getting Started
+## Flutter framework
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Flutter 1.26.0-18.0.pre.112 • channel master • https://github.com/flutter/flutter.git
+Framework • revision 43d604e131 (13 days ago) • 2021-02-01 15:02:25 -0800
+Engine • revision 9a2795ae17
+Tools • Dart 2.12.0 (build 2.12.0-278.0.dev)
